@@ -19,9 +19,7 @@ func main() {
 	mp := makeRuneFrequencyMap(data)
 
 	for k, v := range mp {
-		ch := string(rune(k))
-		freq := v
-		fmt.Println(ch, freq)
+		fmt.Println(string(k), v)
 		// todo start forming the heap using the first constructor forming the initial leave nodes
 		nodeSlice = append(nodeSlice, heap.NewHeapNode(k, v)) // these are currently leaves.
 	}
@@ -33,6 +31,7 @@ func main() {
 }
 
 func makeRuneFrequencyMap(data []byte) map[rune]int32 {
+	// here is where the data has to be read!
 	mp := make(map[rune]int32)
 	for i := 0; i < len(data); i++ {
 		if data[i] == '\n' || data[i] == ' ' || data[i] == '\t' {

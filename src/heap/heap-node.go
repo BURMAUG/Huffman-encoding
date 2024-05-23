@@ -2,8 +2,8 @@ package heap
 
 import "errors"
 
-// NodeInterface is used for inherited features
-type NodeInterface interface {
+// nodeInterface is used for inherited features
+type nodeInterface interface {
 	GetCh() rune
 	GetFreq() int32
 	Left() (*Node, error)

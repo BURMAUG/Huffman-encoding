@@ -1,12 +1,20 @@
 package heap
 
-type HeapInterface interface {
-	Peek() *Node
-	DeleteMin() *Node
-	Insert(n Node)
-	Size() int32
-}
-
 type Heap struct {
 	nodes []*Node
+}
+
+func (h *Heap) Peek() *Node {
+	return nil
+}
+func (h *Heap) DeleteMin() *Node {
+	return nil
+}
+
+func (h *Heap) Insert(n Node) {
+
+}
+
+func (h *Heap) Size() int32 {
+	return 2
 }

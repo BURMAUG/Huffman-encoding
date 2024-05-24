@@ -23,16 +23,14 @@ func main() {
 		// todo start forming the heap using the first constructor forming the initial leave nodes
 		nodeSlice = append(nodeSlice, heap.NewHeapNode(k, v)) // these are currently leaves.
 	}
-
-	println()
 	for _, node := range nodeSlice {
 		fmt.Printf("Node: char=%c, freq=%d\n", node.GetCh(), node.GetFreq())
 	}
 }
 
-func makeRuneFrequencyMap(data []byte) map[rune]int32 {
-	// here is where the data has to be read!
-	mp := make(map[rune]int32)
+func makeRuneFrequencyMap(data []byte) map[rune]int {
+	// here is where the data has to be re
+	mp := make(map[rune]int)
 	for i := 0; i < len(data); i++ {
 		if data[i] == '\n' || data[i] == ' ' || data[i] == '\t' {
 			continue

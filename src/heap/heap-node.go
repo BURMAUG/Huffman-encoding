@@ -24,6 +24,8 @@ func NewHeapNode(ch rune, freq int) *Node {
 	return &Node{ch: ch, freq: freq}
 }
 
+// NewHeapNodes is a way to create a new heap given a character and frequency.
+// it returns a pointer to the created node
 func NewHeapNodes(ch rune, freq int, left, right Node) *Node {
 	return &Node{ch: ch, freq: freq, left: &left, right: &right}
 }

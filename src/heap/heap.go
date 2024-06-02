@@ -4,7 +4,7 @@ type Heap struct {
 	nodes []*Node
 }
 
-func (h *Heap) Parent(index int) int {
+func Parent(index int) int {
 	return index - 1/2
 }
 
@@ -38,14 +38,28 @@ func (h *Heap) Peek() *Node {
 	return h.nodes[0]
 }
 
+// DeleteMin deletes the root node as this is the minimum.
 func (h *Heap) DeleteMin() *Node {
 	return nil
 }
 
-func (h *Heap) Insert(n Node) {
+// HeapifyUp Move nodes with the min value to the top of the Heap.
+func (h *Heap) HeapifyUp(index int) {
+	parentIndex := Parent(index)
+	if index > 0 && h.nodes[index].GetFreq() < h.nodes[parentIndex].GetFreq() {
+		h.Swap(index, parentIndex)
+		h.HeapifyUp(parentIndex)
+	}
+}
+
+func (h *Heap) HeapifyDown(index int) {
 
 }
 
-func (h *Heap) Size() int32 {
-	return 2
+func (h *Heap) Insert(n *Node) {
+	h.nodes = append(h.nodes, n)
+}
+
+func (h *Heap) Size() int {
+	return len(h.nodes)
 }

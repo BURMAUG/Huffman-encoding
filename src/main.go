@@ -65,16 +65,16 @@ func main() {
 	}
 	fmt.Printf("Node: char=%c, freq=%d\n", cur.GetCh(), cur.GetFreq())
 	println()
-	preorder(cur, "")
+	preorderEncoding(cur, "")
 }
 
-func preorder(node *heap.Node, s string) {
+func preorderEncoding(node *heap.Node, s string) {
 	if node.Left() == nil && node.Right() == nil && node.GetCh() != 0 {
 		fmt.Printf("Node: char=%c, freq=%s\n", node.GetCh(), s)
 		return
 	}
-	preorder(node.Left(), s+string("0"))
-	preorder(node.Right(), s+string("1"))
+	preorderEncoding(node.Left(), s+string("0"))
+	preorderEncoding(node.Right(), s+string("1"))
 }
 func makeRuneFrequencyMap(data []byte) map[rune]int {
 	// here is where the data has to be re

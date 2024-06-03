@@ -35,7 +35,7 @@ func main() {
 		if err != nil {
 			panic(errors.New("err from second node"))
 		}
-		hp.Insert(heap.NewHeapNodes(0, firstNode.GetFreq()+secondNode.GetFreq(), nil, nil))
+		hp.Insert(heap.NewHeapNodes(0, firstNode.GetFreq()+secondNode.GetFreq(), firstNode, secondNode))
 	}
 
 	// have to start building the huffman encoding

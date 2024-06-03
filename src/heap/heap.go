@@ -4,31 +4,32 @@ type Heap struct {
 	nodes []*Node
 }
 
+// Parent returns the parent node index
 func Parent(index int) int {
 	return (index - 1) / 2
 }
 
-// LeftChild
+// LeftChild returns the left child index of a given node.
 func LeftChild(index int) int {
 	return 2*index + 1
 }
 
-// RightChild
+// RightChild returns the right child index of a given node.
 func RightChild(index int) int {
 	return 2*index + 2
 }
 
-// HasLeftChild
+// HasLeftChild checks to see if the node has a left child or not.
 func (h *Heap) HasLeftChild(index int) bool {
 	return LeftChild(index) < len(h.nodes)
 }
 
-// HasRightChild
+// HasRightChild checks to see if the current node has a right child.
 func (h *Heap) HasRightChild(index int) bool {
 	return RightChild(index) < len(h.nodes)
 }
 
-// Swap
+// Swap interchange two nodes in a heap.
 func (h *Heap) Swap(index1, index2 int) {
 	h.nodes[index1], h.nodes[index2] = h.nodes[index2], h.nodes[index1]
 }
@@ -59,7 +60,6 @@ func (h *Heap) HeapifyDown(index int) {
 func (h *Heap) Insert(n *Node) {
 	h.nodes = append(h.nodes, n)
 	h.HeapifyUp(len(h.nodes) - 1)
-
 }
 
 func (h *Heap) Size() int {

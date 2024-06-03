@@ -24,15 +24,10 @@ func main() {
 		fmt.Println(string(k), v)
 		// todo start forming the heap using the first constructor forming the initial leave nodes
 		nodeSlice = append(nodeSlice, heap.NewHeapNode(k, v)) // these are currently leaves.
+		hp.Insert(heap.NewHeapNode(k, v))                     // added to the heap.
 	}
 
-	// Make heap here
-	for _, v := range nodeSlice {
-		hp.Insert(v)
-	}
-
-	fmt.Println(hp.Size())
-	fmt.Printf("Node char=%c\n", hp.Peek().GetCh())
+	// have to start building the huffman encoding
 
 	for _, node := range nodeSlice {
 		fmt.Printf("Node: char=%c, freq=%d\n", node.GetCh(), node.GetFreq())

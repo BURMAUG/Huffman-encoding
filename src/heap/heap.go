@@ -5,7 +5,7 @@ type Heap struct {
 }
 
 func Parent(index int) int {
-	return index - 1/2
+	return (index - 1) / 2
 }
 
 // LeftChild
@@ -58,6 +58,8 @@ func (h *Heap) HeapifyDown(index int) {
 
 func (h *Heap) Insert(n *Node) {
 	h.nodes = append(h.nodes, n)
+	h.HeapifyUp(len(h.nodes) - 1)
+
 }
 
 func (h *Heap) Size() int {

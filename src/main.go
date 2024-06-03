@@ -10,6 +10,7 @@ import (
 func main() {
 	var nodeSlice []*heap.Node
 	var data []byte
+	hp := &heap.Heap{}
 
 	data, err := os.ReadFile("../src/heap/heap-node.go")
 	if err != nil {
@@ -18,11 +19,21 @@ func main() {
 
 	mp := makeRuneFrequencyMap(data)
 
+	// Making individual nodes in order to mkae the heap
 	for k, v := range mp {
 		fmt.Println(string(k), v)
 		// todo start forming the heap using the first constructor forming the initial leave nodes
 		nodeSlice = append(nodeSlice, heap.NewHeapNode(k, v)) // these are currently leaves.
 	}
+
+	// Make heap here
+	for _, v := range nodeSlice {
+		hp.Insert(v)
+	}
+
+	fmt.Println(hp.Size())
+	fmt.Printf("Node char=%c\n", hp.Peek().GetCh())
+
 	for _, node := range nodeSlice {
 		fmt.Printf("Node: char=%c, freq=%d\n", node.GetCh(), node.GetFreq())
 	}

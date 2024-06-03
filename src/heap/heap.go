@@ -1,5 +1,7 @@
 package heap
 
+import "errors"
+
 type Heap struct {
 	nodes []*Node
 }
@@ -40,8 +42,16 @@ func (h *Heap) Peek() *Node {
 }
 
 // DeleteMin deletes the root node as this is the minimum.
-func (h *Heap) DeleteMin() *Node {
-	return nil
+func (h *Heap) DeleteMin() (*Node, error) {
+	if h.Size() <= 0 {
+		return nil, errors.New("heap has zero elements and as such can perform a delete operation")
+	}
+	minNode := h.nodes[0]
+	lastIndex := len(h.nodes) - 1
+	h.nodes[0] = h.nodes[lastIndex]
+	h.nodes = h.nodes[:lastIndex]
+	h.HeapifyDown(0)
+	return minNode, nil
 }
 
 // HeapifyUp Move nodes with the min value to the top of the Heap.
@@ -54,7 +64,22 @@ func (h *Heap) HeapifyUp(index int) {
 }
 
 func (h *Heap) HeapifyDown(index int) {
+	smallest := index
+	leftIndex := LeftChild(index)
+	rightIndex := RightChild(index)
 
+	if h.HasLeftChild(index) && h.nodes[leftIndex].GetFreq() < h.nodes[smallest].GetFreq() {
+		smallest = leftIndex
+	}
+
+	if h.HasRightChild(index) && h.nodes[rightIndex].GetFreq() < h.nodes[smallest].GetFreq() {
+		smallest = rightIndex
+	}
+
+	if smallest != index {
+		h.Swap(index, smallest)
+		h.HeapifyDown(index)
+	}
 }
 
 func (h *Heap) Insert(n *Node) {

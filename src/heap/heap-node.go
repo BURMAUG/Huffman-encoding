@@ -1,13 +1,11 @@
 package heap
 
-import "errors"
-
 // nodeInterface is used for inherited features
 type nodeInterface interface {
 	GetCh() rune
 	GetFreq() int
-	Left() (*Node, error)
-	Right() (*Node, error)
+	Left() *Node
+	Right() *Node
 }
 
 // Node represents a node to a heap
@@ -38,11 +36,8 @@ func (n *Node) GetFreq() int {
 	return n.freq
 }
 
-func (n *Node) Left() (*Node, error) {
-	if n.left == nil {
-		panic(errors.New("left is nil"))
-	}
-	return n.left, nil
+func (n *Node) Left() *Node {
+	return n.left
 }
 
 func (n *Node) Right() *Node {

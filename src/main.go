@@ -16,7 +16,7 @@ func main() {
 	if err != nil {
 		panic(errors.New("no such file or directory"))
 	}
-
+	// fmt.Println(string(data))
 	mp := makeRuneFrequencyMap(data)
 
 	// Making individual nodes in order to mkae the heap
@@ -26,7 +26,7 @@ func main() {
 	}
 
 	// create new nodes using the second constructor of the heap node
-	for i := 0; i < hp.Size() && hp.Size() >= 2; i++ {
+	for hp.Size() > 1 {
 		firstNode, err := hp.DeleteMin()
 		if err != nil {
 			panic(errors.New("err from first node"))
@@ -35,15 +35,47 @@ func main() {
 		if err != nil {
 			panic(errors.New("err from second node"))
 		}
-		hp.Insert(heap.NewHeapNodes(0, firstNode.GetFreq()+secondNode.GetFreq(), firstNode, secondNode))
+		parent := heap.NewHeapNodes(0, firstNode.GetFreq()+secondNode.GetFreq(), firstNode, secondNode)
+		hp.Insert(parent)
 	}
+
+	cur := hp.Peek()
+	//for cur != nil {
+	//	if cur.Left() == nil && cur.Right() == nil && cur.GetFreq() != 0 {
+	//		fmt.Printf("%c=%d", cur.GetCh(), cur.GetFreq())
+	//	}
+	//	cur = cur.Left()
+	//}
+
+	//for hp.Size() == 1 {
+	//	// check left and right child
+	//	parent := hp.Peek()
+	//	left := parent.Left()
+	//	right := parent.Right()
+	//	if left == nil && right == nil && parent.GetCh() != 0 {
+	//		println(parent.GetCh())
+	//	}
+	//_:
+	//	hp.DeleteMin()
+	//}
 
 	// have to start building the huffman encoding
 	for _, node := range nodeSlice {
 		fmt.Printf("Node: char=%c, freq=%d\n", node.GetCh(), node.GetFreq())
 	}
+	fmt.Printf("Node: char=%c, freq=%d\n", cur.GetCh(), cur.GetFreq())
+	println()
+	preorder(cur, "")
 }
 
+func preorder(node *heap.Node, s string) {
+	if node.Left() == nil && node.Right() == nil && node.GetCh() != 0 {
+		fmt.Printf("Node: char=%c, freq=%s\n", node.GetCh(), s)
+		return
+	}
+	preorder(node.Left(), s+string("0"))
+	preorder(node.Right(), s+string("1"))
+}
 func makeRuneFrequencyMap(data []byte) map[rune]int {
 	// here is where the data has to be re
 	mp := make(map[rune]int)

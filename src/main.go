@@ -27,55 +27,46 @@ func main() {
 
 	// create new nodes using the second constructor of the heap node
 	for hp.Size() > 1 {
+
 		firstNode, err := hp.DeleteMin()
 		if err != nil {
 			panic(errors.New("err from first node"))
 		}
+
 		secondNode, err := hp.DeleteMin()
 		if err != nil {
 			panic(errors.New("err from second node"))
 		}
+
 		parent := heap.NewHeapNodes(0, firstNode.GetFreq()+secondNode.GetFreq(), firstNode, secondNode)
 		hp.Insert(parent)
 	}
 
 	cur := hp.Peek()
-	//for cur != nil {
-	//	if cur.Left() == nil && cur.Right() == nil && cur.GetFreq() != 0 {
-	//		fmt.Printf("%c=%d", cur.GetCh(), cur.GetFreq())
-	//	}
-	//	cur = cur.Left()
-	//}
-
-	//for hp.Size() == 1 {
-	//	// check left and right child
-	//	parent := hp.Peek()
-	//	left := parent.Left()
-	//	right := parent.Right()
-	//	if left == nil && right == nil && parent.GetCh() != 0 {
-	//		println(parent.GetCh())
-	//	}
-	//_:
-	//	hp.DeleteMin()
-	//}
-
 	// have to start building the huffman encoding
 	for _, node := range nodeSlice {
 		fmt.Printf("Node: char=%c, freq=%d\n", node.GetCh(), node.GetFreq())
 	}
 	fmt.Printf("Node: char=%c, freq=%d\n", cur.GetCh(), cur.GetFreq())
 	println()
-	preorderEncoding(cur, "")
+  // I should have an encoding table here
+  huffmanEncoding := make(map[rune]string , 1) // my huffman encoding table. 
+	preorderEncoding(cur, "", huffmanEncoding)
+  for k, v := range huffmanEncoding{
+    fmt.Printf("char=%c -> %s\n", k, v)
+  }
 }
 
-func preorderEncoding(node *heap.Node, s string) {
+func preorderEncoding(node *heap.Node, s string, encoding map[rune]string) {
 	if node.Left() == nil && node.Right() == nil && node.GetCh() != 0 {
-		fmt.Printf("Node: char=%c, freq=%s\n", node.GetCh(), s)
+    encoding[node.GetCh()] = s
+		// fmt.Printf("Node: char=%c, freq=%s\n", node.GetCh(), s)
 		return
 	}
-	preorderEncoding(node.Left(), s+string("0"))
-	preorderEncoding(node.Right(), s+string("1"))
+	preorderEncoding(node.Left(), s+string("0"), encoding)
+	preorderEncoding(node.Right(), s+string("1"), encoding)
 }
+
 func makeRuneFrequencyMap(data []byte) map[rune]int {
 	// here is where the data has to be re
 	mp := make(map[rune]int)

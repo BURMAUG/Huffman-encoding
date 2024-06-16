@@ -10,6 +10,7 @@ This is the implementation of the Huffman encoding in Go programming language.
 ### Issue encountered
 
 ### Accomplishment
+Implemented the Huffman encoding algorithm using the min heap data structure 
 
 ### Author
 [Burmau Garba](https://github.com/BURMAUG?tab=repositories)

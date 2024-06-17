@@ -7,6 +7,13 @@ import (
 	"os"
 )
 
+var (
+	nodeSlice []*heap.Node
+	data      []byte
+)
+
+//hp := &heap.Heap{}
+
 func main() {
 	var nodeSlice []*heap.Node
 	var data []byte
@@ -48,21 +55,32 @@ func main() {
 		fmt.Printf("Node: char=%c, freq=%d\n", node.GetCh(), node.GetFreq())
 	}
 	fmt.Printf("Node: char=%c, freq=%d\n", cur.GetCh(), cur.GetFreq())
+
 	println()
-  // I should have an encoding table here
-  huffmanEncoding := make(map[rune]string , 1) // my huffman encoding table. 
+
+	huffmanEncoding := make(map[rune]string, 1) // my huffman encoding table.
 	preorderEncoding(cur, "", huffmanEncoding)
-  for k, v := range huffmanEncoding{
-    fmt.Printf("char=%c -> %s\n", k, v)
+
+	for k, v := range huffmanEncoding {
+	  fmt.Printf("char=%c -> %s\n", k, v)
+	}
+  println()
+  encoding := ""
+  for i := 0; i < len(data); i++{
+    encoding += huffmanEncoding[rune(data[i])]
   }
+  println(encoding) //compressed! 
+
 }
 
 func preorderEncoding(node *heap.Node, s string, encoding map[rune]string) {
+
 	if node.Left() == nil && node.Right() == nil && node.GetCh() != 0 {
-    encoding[node.GetCh()] = s
+		encoding[node.GetCh()] = s
 		// fmt.Printf("Node: char=%c, freq=%s\n", node.GetCh(), s)
 		return
 	}
+
 	preorderEncoding(node.Left(), s+string("0"), encoding)
 	preorderEncoding(node.Right(), s+string("1"), encoding)
 }
@@ -70,16 +88,20 @@ func preorderEncoding(node *heap.Node, s string, encoding map[rune]string) {
 func makeRuneFrequencyMap(data []byte) map[rune]int {
 	// here is where the data has to be re
 	mp := make(map[rune]int)
+
 	for i := 0; i < len(data); i++ {
 		//	if data[i] == '\n' || data[i] == ' ' || data[i] == '\t' {
 		//	continue
 		//}
 		val, in := mp[rune(data[i])]
+
 		if in {
 			mp[rune(data[i])] = val + 1
 		} else {
 			mp[rune(data[i])] = 1
 		}
+
 	}
+
 	return mp
 }

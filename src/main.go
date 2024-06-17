@@ -9,12 +9,12 @@ import (
 
 var (
 	nodeSlice []*heap.Node
-	data      []byte 
-  hp *heap.Heap
+	data      []byte
+	hp        *heap.Heap
 )
 
 func main() {
-  hp = &heap.Heap{}
+	hp = &heap.Heap{}
 	data, err := os.ReadFile("../src/heap/heap-node.go")
 	if err != nil {
 		panic(errors.New("no such file or directory"))
@@ -58,17 +58,19 @@ func main() {
 	preorderEncoding(cur, "", huffmanEncoding)
 
 	for k, v := range huffmanEncoding {
-	  fmt.Printf("char=%c -> %s\n", k, v)
+		fmt.Printf("char=%c -> %s\n", k, v)
 	}
-  
-  println()
 
-  encoding := ""
-  for i := 0; i < len(data); i++{
-    encoding += huffmanEncoding[rune(data[i])]
-  }
-  fmt.Println(encoding) //compressed! 
+	println()
 
+	encoding := ""
+	for i := 0; i < len(data); i++ {
+		encoding += huffmanEncoding[rune(data[i])]
+	}
+	fmt.Println(encoding) //compressed!
+	text, _ := os.Create("compress.txt")
+	text.WriteString(encoding)
+	text.Close()
 }
 
 func preorderEncoding(node *heap.Node, s string, encoding map[rune]string) {

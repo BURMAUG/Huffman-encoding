@@ -9,16 +9,12 @@ import (
 
 var (
 	nodeSlice []*heap.Node
-	data      []byte
+	data      []byte 
+  hp *heap.Heap
 )
 
-//hp := &heap.Heap{}
-
 func main() {
-	var nodeSlice []*heap.Node
-	var data []byte
-	hp := &heap.Heap{}
-
+  hp = &heap.Heap{}
 	data, err := os.ReadFile("../src/heap/heap-node.go")
 	if err != nil {
 		panic(errors.New("no such file or directory"))
@@ -64,12 +60,14 @@ func main() {
 	for k, v := range huffmanEncoding {
 	  fmt.Printf("char=%c -> %s\n", k, v)
 	}
+  
   println()
+
   encoding := ""
   for i := 0; i < len(data); i++{
     encoding += huffmanEncoding[rune(data[i])]
   }
-  println(encoding) //compressed! 
+  fmt.Println(encoding) //compressed! 
 
 }
 
@@ -90,9 +88,6 @@ func makeRuneFrequencyMap(data []byte) map[rune]int {
 	mp := make(map[rune]int)
 
 	for i := 0; i < len(data); i++ {
-		//	if data[i] == '\n' || data[i] == ' ' || data[i] == '\t' {
-		//	continue
-		//}
 		val, in := mp[rune(data[i])]
 
 		if in {

@@ -68,7 +68,7 @@ func main() {
 		encoding += huffmanEncoding[rune(data[i])]
 	}
 	fmt.Println(encoding) //compressed!
-	text, _ := os.Create("/heap/compress.bin")
+	text, _ := os.Create("heap/compress.bin")
 	text.WriteString(encoding)
 	text.Close()
 }

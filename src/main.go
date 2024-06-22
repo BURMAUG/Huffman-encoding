@@ -15,7 +15,7 @@ var (
 
 func main() {
 	hp = &heap.Heap{}
-	data, err := os.ReadFile("../src/heap/heap-node.go")
+	data, err := os.ReadFile("../src/heap/d.txt")
 	if err != nil {
 		panic(errors.New("no such file or directory"))
 	}
@@ -68,7 +68,7 @@ func main() {
 		encoding += huffmanEncoding[rune(data[i])]
 	}
 	fmt.Println(encoding) //compressed!
-	text, _ := os.Create("compress.txt")
+	text, _ := os.Create("/heap/compress.bin")
 	text.WriteString(encoding)
 	text.Close()
 }
